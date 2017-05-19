@@ -1,3 +1,23 @@
+# role :name, %{[user]@[IP adde.]}
+role :app, %w{deployer@47.90.209.67}
+role :web, %w{deployer@47.90.209.67}
+role :db,  %w{deployer@47.90.209.67}
+
+# Define server(s)
+server '47.90.209.67', user: 'deployer', roles: %w{web}
+
+# SSH Options
+# See the example commented out section in the file
+# for more options.
+set :ssh_options, {
+    forward_agent: false,
+    auth_methods: %w(password),
+    password: 'user_deployers_password',
+    user: 'deployer',
+}
+
+
+
 # server-based syntax
 # ======================
 # Defines a single server with a list of roles and multiple properties.
