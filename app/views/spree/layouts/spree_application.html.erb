@@ -1,0 +1,116 @@
+<!doctype html>
+<!--[if lt IE 7 ]> <html class="ie ie6" lang="<%= I18n.locale %>"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie ie7" lang="<%= I18n.locale %>"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie ie8" lang="<%= I18n.locale %>"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie ie9" lang="<%= I18n.locale %>"> <![endif]-->
+<!--[if gt IE 9]><!--><html lang="<%= I18n.locale %>"><!--<![endif]-->
+  <head data-hook="inside_head">
+    <%= render :partial => 'spree/shared/head' %>
+  </head>
+  <body class="<%= body_class %>" id="<%= @body_id || 'default' %>" data-hook="body">
+
+    <div class="container">
+
+      <%= render :partial => 'spree/shared/header' %>
+
+      <div id="wrapper" class="row" data-hook>
+
+        <%= breadcrumbs(@taxon) %>
+
+        <%= render :partial => 'spree/shared/sidebar' if content_for? :sidebar %>
+
+        <div id="content" class="columns <%= !content_for?(:sidebar) ? "sixteen" : "twelve omega" %>" data-hook>
+          <%= flash_messages %>
+          <%= yield %>
+        </div>
+
+        <%= yield :templates %>
+
+      </div>
+
+      <%= render :partial => 'spree/shared/footer' %>
+
+    </div>
+
+    <%= render :partial => 'spree/shared/google_analytics' %>
+    <script>
+      Spree.api_key = <%= raw(try_spree_current_user.try(:spree_api_key).to_s.inspect) %>;
+    </script>
+
+
+    <!-- Ray Gao #mobile nav -->
+    <script>
+    (function () {
+        // Create mobile element
+        var mobile = document.createElement('div');
+        mobile.className = 'nav-mobile';
+        document.querySelector('#spree-header').appendChild(mobile);
+
+
+        // hasClass
+        function hasClass(elem, className) {
+            return new RegExp(' ' + className + ' ').test(' ' + elem.className + ' ');
+        }
+
+        function hideShow(elem) {
+            if (elem.style.display == 'none' || elem.style.display == '') {
+                elem.style.display =  'block';
+                //alert(elem.style.display);
+            }  else {
+                elem.style.display =  'none';
+                //alert(elem.style.display);
+            }
+        }
+
+        // Mobile nav function
+        var mobileNav = document.querySelector('.nav-mobile');
+        var toggle = document.querySelector('#header');
+        mobileNav.onclick = function () {
+            hideShow(toggle);
+        };
+
+    })();
+    </script>
+
+    <style>
+        /* Mobile Navigation */
+        .nav-mobile {
+            display:none; /* Hide from browsers that don't support media queries */
+            cursor:pointer;
+            position:absolute;
+            top:0;
+            right:0;
+            background: darkslateblue;
+            height:40px;
+            width:40px;
+            border-radius:5px;
+            -webkit-border-radius:5px;
+            -moz-border-radius:5px;
+        }
+
+        /*------------------------------------*\
+            Media Queries
+        \*------------------------------------*/
+
+        @media only screen and (min-width: 320px) and (max-width: 768px) {
+            .nav-mobile {
+                display:block;
+            }
+            #header {
+                display:none;
+            }
+            .nav-active {
+                display:block;
+            }
+            .nav-mobile-open {
+                border-radius:5px 5px 0 0;
+                -webkit-border-radius:5px 5px 0 0;
+                -moz-border-radius:5px 5px 0 0;
+            }
+        }
+    </style>
+    <!-- end Ray's mobile-nav -->
+
+
+  </body>
+</html>

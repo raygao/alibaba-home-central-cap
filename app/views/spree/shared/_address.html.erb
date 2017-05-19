@@ -1,0 +1,53 @@
+<div class="address vcard">
+  <div class="fn"><%= address.full_name %></div>
+  <% unless address.company.blank? %>
+    <div class="org">
+      <%= address.company %>
+    </div>
+  <% end %>
+  <div class="adr">
+    <div class="street-address">
+      <div class="street-address-line">
+        <%= address.address1 %>
+      </div>
+      <% unless address.address2.blank? %>
+        <div class="street-address-line">
+          <%= address.address2 %>
+        </div>
+      <% end %>
+    </div>
+    <div class="local">
+      <span class="locality"><%= address.city %></span>
+      <span class="region"><%= address.state_text %></span>
+      <span class="postal-code"><%= address.zipcode %></span>
+      <div class="country-name"><%= address.country.try(:name) %></div>
+    </div>
+  </div>
+  <% unless address.phone.blank? %>
+    <div class="tel">
+      <span class="type"><%= Spree.t(:phone) %></span>
+      <%= address.phone %>
+    </div>
+  <% end %>
+  <% unless address.alternative_phone.blank? %>
+    <div class="alternative-phone tel">
+      <span class="type"><%= Spree.t(:alternative_phone) %></span>
+      <%= address.alternative_phone %>
+    </div>
+  <% end %>
+
+  <!-- Ray Gao -->
+  <% unless address.geo_lat.blank? %>
+      <div class="geo_lat">
+        <span class="type"><%= Spree.t(:geo_lat) %>:</span>
+        <%= address.geo_lat %>
+      </div>
+  <% end %>
+  <% unless address.geo_long.blank? %>
+      <div class="geo_lat">
+        <span class="type"><%= Spree.t(:geo_long) %>:</span>
+        <%= address.geo_long %>
+      </div>
+  <% end %>
+  <!-- Ray Gao -->
+</div>
